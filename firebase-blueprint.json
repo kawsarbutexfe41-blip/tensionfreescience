@@ -1,0 +1,53 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "User profile and statistics for Class 9-10 science students",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "description": "Firebase Auth user ID" },
+        "name": { "type": "string", "maxLength": 100, "description": "Student full name" },
+        "email": { "type": "string", "maxLength": 150, "description": "Student email address" },
+        "phoneNumber": { "type": "string", "maxLength": 30, "description": "Student phone number" },
+        "studentClass": { "type": "string", "enum": ["9", "10"], "description": "Grade 9 or 10" },
+        "school": { "type": "string", "maxLength": 150, "description": "School name" },
+        "district": { "type": "string", "maxLength": 60, "description": "District" },
+        "totalXP": { "type": "number", "description": "Total experience points" },
+        "level": { "type": "number", "description": "Calculated level" },
+        "totalExams": { "type": "number", "description": "Number of exams completed" },
+        "totalCorrect": { "type": "number", "description": "Total correct MCQ answers" },
+        "totalAttempted": { "type": "number", "description": "Total MCQ questions attempted" },
+        "avatar": { "type": "string", "maxLength": 500, "description": "Avatar URL" },
+        "createdAt": { "type": "string", "description": "Creation timestamp" }
+      },
+      "required": ["uid", "name", "totalXP", "level"]
+    },
+    "ExamRecord": {
+      "title": "ExamRecord",
+      "description": "Completed MCQ exam result",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique exam record ID" },
+        "userId": { "type": "string", "description": "Owner student user ID" },
+        "subject": { "type": "string", "maxLength": 100, "description": "Exam subject name" },
+        "chapter": { "type": "string", "maxLength": 200, "description": "Chapter name or mixed" },
+        "totalQuestions": { "type": "number", "description": "Question count" },
+        "correctCount": { "type": "number", "description": "Correct answers count" },
+        "wrongCount": { "type": "number", "description": "Wrong answers count" },
+        "scoreXP": { "type": "number", "description": "Earned XP" },
+        "date": { "type": "string", "description": "Exam completion timestamp" }
+      },
+      "required": ["id", "userId", "subject", "correctCount", "scoreXP", "date"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "UserProfile",
+      "description": "Public and private student user profile documents"
+    },
+    "/users/{userId}/exams/{examId}": {
+      "schema": "ExamRecord",
+      "description": "Student individual exam result records"
+    }
+  }
+}
